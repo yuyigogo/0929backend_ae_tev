@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>传感器列表</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <style>
+    body{
+      background:#1D1D1D;
+      color:#C0BEB3;
+    }
+    tr{
+      background:transparent !important
+    }
+    th{
+      font-weight: bold;border-bottom:0 !important;color:#fff;border-top: 1px solid #252525 !important;
+    }
+    th,td{
+      border-bottom: 1px solid #252525 !important;padding:0 20px !important;
+      height: 40px;line-height: 40px !important;
+    }
+    .table-title{
+      height: 40px;line-height:40px;font-size:18px;padding:10px 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <p class="table-title">传感器列表</p>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>测点名称</th>
+          <th>数据类型</th>
+          <th>采样时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in dataList">
+          <td>{[item.test_location_name]}</td>
+          <td>{[item.data_type]}</td>
+          <td>{[item.acquisition_time]}</td>
+          <td>
+            <a href="http://127.0.0.1:5000/sensor_details/" target="_blank" rel="noopener noreferrer">详情</a>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  
+  <script>
+    var app = new Vue({
+      delimiters:['{[',']}'],
+      el: '#app',
+      data: {
+        message: 'Hello Vue!',
+        dataList:[],
+      },
+      methods:{
+        getData(){
+          let This = this;
+          $.ajax({
+            type:'GET',
+            url:'http://127.0.0.1:5000/rest/v1/sensor_list/',
+            success:function(res){
+              This.dataList = res;
+              console.log(res,123)
+            },
+        
+          })
+        }
+      },
+      mounted(){      
+        this.getData();
+        setInterval(this.getData,30000)
+      }
+    })
+  </script>
+</body>
+</html>

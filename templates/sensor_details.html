@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>传感器列表</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="../static/js/echarts.min.js"></script>
+  <style>
+    html,body{
+      background:#1D1D1D;
+      color:#C0BEB3;
+      height: 100%;
+      padding:100px 50px;
+    }
+    .left-contener,.right-contener{
+      height:100%;padding:0;
+
+    }
+    .right-contener{
+      background:#141414;border:solid 1px #2A2A2A;
+    }
+    .left-canvas{
+      margin-right: 10px;height: 100%;width: calc(100% - 10px);background:#141414;z-index:1;
+      border:solid 1px #2A2A2A;
+    }
+    .info{
+      height: 30%;width: 100%;
+      border-bottom: solid 1px #fff;padding:20px
+    }
+    .chart-box{
+      height: 70%;width: 100%;
+    }
+    .left-span{
+      float:left;
+    }
+    .right-span{
+      float:right;
+    }
+    p{
+      height: 30px;line-height: 30px;color:#fff;
+    }
+  </style>
+</head>
+<body>
+  <div style="height: 100%;;">
+    <div class="col-md-8 left-contener">
+      <div class="left-canvas" id="canvas"></div>
+    </div>
+    <div class="col-md-4 right-contener">
+      <div class="info">
+        <p>
+          <span class="left-span">测点名称</span><span class="right-span">开关柜UHF测点</span>
+        </p>
+        <p>
+          <span class="left-span">采样时间</span><span class="right-span">2021-06-01 12:00:00</span>
+        </p>
+        <p>
+          <span class="left-span">数据类型</span><span class="right-span">特高频</span>
+        </p>
+      </div>
+      <div class="chart-box"></div>
+    </div>
+    <div style="clear:both;"></div>
+  </div>
+  <script>
+    window.onload = function(){
+      var myChart = echarts.init(document.getElementById('canvas'));
+      var data = [
+        -34,-39,-30,
+        -34,-31,-34,
+        -33,-39,-38,  ]
+      var options = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross'
+          }
+        },
+        xAxis:  {
+          type: 'category',
+          // axisTick: {
+          //   alignWithLabel: true
+          // },
+          data: [ '2016-10', '2016-11', '2016-12']
+        },
+        yAxis: {
+          type: 'value',
+          splitLine: {
+            show: false
+          },
+          axisLine:{show:true},
+          scale:true
+        },
+
+        series: [{
+          data: data,
+          type: 'line',
+          itemStyle:{
+            normal:{
+              color:'#fff',
+              lineStyle:{
+                color:'#f00'
+              }
+            }
+          }
+        }]
+      };
+      myChart.setOption(options)
+    }
+
+  </script>
+</body>
+</html>
